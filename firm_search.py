@@ -16,49 +16,32 @@ from collections import Counter
 import pprint as pp
 
 def main():
-    #bridge()
-
-    name = "Farallon"
-    address = "One Maritime Plaza, Suite 2100, San Francisco, CA 94111"
+    # example of function usage on a well-known firm
+    name = "Bridgewater Associates"
+    address = "1 Glendinning Pl, Westport, CT 06880"
     
     tokens = nltk.word_tokenize(name.lower())
     firm_info = [name, address, "Hedge Fund"]
     queries = prepare_searches(firm_info)
     best_urls = cross_reference(queries)
-    return 0
-
-
-def page_parse():
-    name_results, name_urls = get_google_pages(name)
-    print(name_urls)
-    good_urls = []
-    for url in name_urls:
-        if url.startswith("https://www.bloomberg.com/"):
-            bloomberg = parse_bloomberg(url)
-        if url.startswith("https://www.wikipedia.org"):
-            wiki = parse_wiki(url)
-        if url.startswith("https://whalewisdom.com"):
-            whale = parse_whale(url)
-        if name.lower() in url and "capital" in url:
-            good_urls.append(url)
-        for token in tokens:
-            if token in url:
-                pass
-                #good_urls.append(token)
-                #print(url)
-    print(good_urls)
-    
-    cyrus = name_results[0]
-    text = cyrus.getText()
-    clean_text = " ".join(text.split())
+    bwater = best_urls[0]
     tokenizer = nltk.data.load("tokenizers/punkt/english.pickle")
-    sentences = tokenizer.tokenize(clean_text)
+    sentences = tokenizer.tokenize(bwater)
 
     results = extract_aum(sentences)
     print(results)
+    return 0
 
 
 def cross_reference(queries):
+    """
+    Cross-references search queries to determine important URLS.
+
+    Args:
+        queries: list of strings to search and cross-reference
+    Returns:
+        just_urls: list of top 10 urls in sorted order of importance
+    """
     query_results = []
     for query in queries:
         results, urls = get_google_pages(query)
@@ -83,6 +66,15 @@ def cross_reference(queries):
 
 
 def prepare_searches(firm_info):
+    """
+    Converts firm into a list of searches for 
+    cross_reference() method.
+
+    Args:
+        firm_info: tuple of firm information
+    Returns:
+        searches: list of searches to perform
+    """
     name = firm_info[0]
 
     tokens = nltk.word_tokenize(name.lower())
@@ -112,36 +104,11 @@ def prepare_searches(firm_info):
     return searches
 
 
-
-def bridge():
-    name = "Bridgewater Associates"
-    address = "1 Glendinning Pl, Westport, CT 06880"
-
-    name_results, name_urls = get_google_pages(name)
-    add_results, add_urls = get_google_pages(address)
-    
-    # get results that appear for both the name and the address - this tends to give the correct website
-    double_hits = [x for x in name_urls if x in add_urls]
-
-    page_text = []
-    for url in double_hits:
-        for result in name_results:
-            if result.url == url:
-                text = result.getText()
-                
-                clean_text = " ".join(text.split())
-                #print(clean_text)
-                page_text.append(clean_text)
-
-    bwater = page_text[0]
-    tokenizer = nltk.data.load("tokenizers/punkt/english.pickle")
-    sentences = tokenizer.tokenize(bwater)
-
-    results = extract_aum(sentences)
-    print(results)
-
-
 def extract_aum(sentences):
+    """
+    Uses regular expression to search for a dollar amount
+    and extracts the relevant sentences.
+    """
     pattern = re.compile(r'\$[\d\.\,]+\s[b|m]illion')
     occurrences = []
     for sent in sentences:
@@ -150,38 +117,7 @@ def extract_aum(sentences):
             aum = m.group(0)
             context = sent
             occurrences.append((aum, context))
-        # if "$" in sent:
-        #     print(sent)
-        #     aum = sent
     return occurrences
-
-# parse Bloomberg search result
-def parse_bloomberg(url):
-    soup = make_soup(url)
-    description = soup.find("p", {"id": "bDesc"})
-    website = soup.find("a", {"class": "link_sb"})
-    if description != None:
-        print(description.contents)
-    if website != None:
-        print(website.contents)
-    pass
-
-# parses Wikipedia search results
-def parse_wiki(url):
-    pass
-
-# parses Whale Wisdom search result
-def parse_whale(url):
-    pass
-
-
-def extract_quality_urls(urls):
-    high_quality = []
-    for url in urls:
-        if url.startswith("https://en.wikipedia.org/"):
-            high_quality.append(url)
-        if url.startswith("https://www.bloomberg.com/"):
-            high_quality.append(url)
 
 
 def get_google_pages(query):
