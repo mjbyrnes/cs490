@@ -1,0 +1,16 @@
+{% extends "analyst/base.html" %}
+
+{% block content %}
+<h1>Form D Analysis Homepage</h1>
+<p>Please select one of the options below to begin Form D analysis. To examine recent Form D filings, please choose the first option. To scrape today's Form D files, choose the second option.</p>
+<ul>
+    <p>
+        <a href="/analyst/recent/" class="btn btn-lg btn-default">See Recent Form D Files</a>
+    </p>
+    <p>
+        <a href="/analyst/results/" class="btn btn-lg btn-default">Get Today's Files</a>
+    </p>
+</ul>
+
+
+{% endblock %}

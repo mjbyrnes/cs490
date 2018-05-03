@@ -1,0 +1,21 @@
+{% extends "analyst/base.html" %}
+
+{% block content %}
+{% if form_d_list %}
+<h1>Recent Form D Filings</h1>
+    <ul>
+    {% for form in form_d_list %}
+        <li><a href="/analyst/{{ form.cik }}/">{{ form.name }}</a></li>
+        <ul>
+            <li>Address: {{ form.street1 }}, {{ form.city }}, {{ form.state }}</li>
+            <li>Type of Firm: {{ form.ind_group_type }}</li>
+            <li>Minimum Investment Accepted: {{ form.min_investment_accepted }}</li>
+            <li>Total Amount Sold: {{ form.total_amount_sold }}</li>
+
+        </ul>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "analyst/base.html" %}
+
+{% block content %}
+{% if form_id %}
+<h1>{{ form.name }}</h1>
+    <p>
+        <ul>
+            <li>Primary Issuer Information</li>
+            <ul>
+                <li>CIK: {{ form.cik }}</li>
+                <li>Address: {{ form.street1 }}, {{ form.city }}, {{ form.state }}, {{ form.zip_code }}</li>
+                <li>Type of Firm: {{ form.ind_group_type }}</li>
+                <li>Year of Incorporation: {{form.year_of_incorp}}</li>
+            </ul>
+            <li>Offering Data</li>
+            <ul>
+                <li>Minimum Investment Accepted: {{ form.min_investment_accepted }}</li>
+                <li>Total Number of Investors: {{ form.tot_number_investors }}</li>
+                <li>Total Amount Sold: {{ form.total_amount_sold }}</li>
+                <li>Total Offering Amount: {{ form.total_offering_amount }}</li>
+                <li>Total Remaining: {{ form.total_remaining }}</li>
+                <li>Has Non-Accredited Investors?: {{ form.has_non_accred }}</li>
+                {% if form.has_non_accred %}
+                    <ul><li>Number of Non-Accredited Investors: {{ form.num_non_accred }}</li></ul>
+                {% endif %}
+                
+            </ul>
+           
+            <li>Date Added: {{ form.date_added }}</li>
+        </ul>
+    <p>
+        <a href="/analyst/{{form_id}}/classify/" class="btn btn-md btn-default">Run Classifier</a>
+    </p>
+    </p>
+    {% if classification %}
+    <p>
+        Decision Tree Classification: {{ classification }}
+    </p>
+    {% endif %}
+{% else %}
+    <p>Form D not found.</p>
+{% endif %}
+{% endblock %}

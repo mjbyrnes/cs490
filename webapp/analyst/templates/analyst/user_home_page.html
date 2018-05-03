@@ -1,0 +1,31 @@
+{% extends "analyst/base.html" %}
+
+{% block content %}
+<div style="text-align: center; padding-top:10px">
+<!-- 	<h1>Welcome, {{ first_name }}.</h1> -->
+	<h3>Search</h3>
+	<p>Perform classification on already scraped files.</p>
+	<p>
+		<a href="/analyst/recent/" class="btn btn-lg btn-default">Examine Recent Forms</a>
+	</p>
+	<p>
+		<a href="/analyst/classify/" class="btn btn-lg btn-default">Classify Recent Forms</a>	
+	</p>
+	
+</div>
+
+<div style="text-align: center; padding-top:20px">
+	<h3>Scraping from SEC Site</h3>
+	<p>Manually update the database with new firms.</p>
+	<a href="/analyst/results/" class="btn btn-lg btn-default">Get Today's Files</a>
+</div>
+
+<div style="text-align: center; padding-top:20px">
+	<h3>User Info</h3>
+	<p>First Name: {{ first_name }}</p>
+	<p>Last Name: {{ last_name }}</p>
+	<p>Email: {{ email }}</p>
+	<a href="/analyst/accounts/edit_info" class="btn btn-lg btn-default">Edit Info</a>
+</div>
+
+{% endblock %}

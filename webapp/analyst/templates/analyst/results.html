@@ -1,0 +1,14 @@
+{% extends "analyst/base.html" %}
+
+{% block content %}
+<h1>Results</h1>
+{% if results %}
+    <ul>
+    {% for result in results %}
+        <p>{{ result }}</p>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No firms are available.</p>
+{% endif %}
+{% endblock %}

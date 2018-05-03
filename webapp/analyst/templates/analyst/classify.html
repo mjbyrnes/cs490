@@ -1,0 +1,24 @@
+{% extends "analyst/base.html" %}
+
+{% block content %}
+{% if form_d_list %}
+    <div class="search_results">
+      <h1>Classification Results
+      <a class="btn btn-md btn-default pull-right" href="/analyst/accounts/profile">Return</a></h1>
+        <div class="row row-results">
+          <div class="col-md-4 col-xs-4"><b>Name</b></div>
+          <div class="col-md-4 col-xs-4"><b>Type of Firm</b></div>
+          <div class="col-md-4 col-xs-4"><b>Classification</b></div>
+        </div>
+      {% for form, pred in form_d_list  %}
+        <div class="row row-results">
+          <div class="col-md-4 col-xs-4 big">{{ form.name }}</div>
+          <div class="col-md-4 col-xs-4">{{ form.ind_group_type }}</div>
+          <div class="col-md-4 col-xs-4">{{ pred }}</div>
+        </div>
+      {% endfor %}
+    </div>
+{% else %}
+    <p>No results are available.</p>
+{% endif %}
+{% endblock %}

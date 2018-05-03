@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<html>
+  <head>
+    <link href="{% static 'analyst/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="{% static 'analyst/library/css/cover.css' %}" media="screen">
+  </head>
+
+  <body>
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Form D Analysis</h3>
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="/analyst/login">Login</a></li>
+                  <li><a href="about">About</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="inner cover">
+            <h2>You are now logged out.</h2>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Built with Django and Bootstrap.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  
+    <script src="{% static 'analyst/bootstrap/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>
